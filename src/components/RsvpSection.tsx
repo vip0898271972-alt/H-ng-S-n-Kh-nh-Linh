@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Heart, CheckCircle2, User, Phone, Send, Sparkles } from 'lucide-react';
 import { GuestRsvp } from '../types';
-import { fireWeddingConfetti } from '../utils/confettiHelper';
+import { fireWeddingConfetti, fireGrandSalute } from '../utils/confettiHelper';
+import { soundEffects } from '../utils/audioHelper';
 
 interface RsvpSectionProps {
   onAddRsvp: (rsvp: Omit<GuestRsvp, 'id' | 'createdAt'>) => void;
@@ -39,6 +40,8 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({
     });
 
     setIsSubmitted(true);
+    soundEffects.playCelebrationFanfare();
+    fireGrandSalute();
     fireWeddingConfetti();
   };
 

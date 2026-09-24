@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Heart, Camera } from 'lucide-react';
+import { Heart, Camera, Sparkles } from 'lucide-react';
 import { WeddingData } from '../types';
 import { fireWeddingConfetti } from '../utils/confettiHelper';
+import { soundEffects } from '../utils/audioHelper';
 
 interface CoupleSectionProps {
   weddingData: WeddingData;
@@ -12,16 +13,25 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ weddingData, onOpe
   const { groom, bride } = weddingData;
   const [groomLikes, setGroomLikes] = useState(128);
   const [brideLikes, setBrideLikes] = useState(156);
+  const [showGroomFloat, setShowGroomFloat] = useState(false);
+  const [showBrideFloat, setShowBrideFloat] = useState(false);
 
   const handleLikeGroom = () => {
     setGroomLikes((prev) => prev + 1);
+    soundEffects.playHeartChime();
     fireWeddingConfetti();
+    setShowGroomFloat(true);
+    setTimeout(() => setShowGroomFloat(false), 1200);
   };
 
   const handleLikeBride = () => {
     setBrideLikes((prev) => prev + 1);
+    soundEffects.playHeartChime();
     fireWeddingConfetti();
+    setShowBrideFloat(true);
+    setTimeout(() => setShowBrideFloat(false), 1200);
   };
+
 
   return (
     <section id="cap-doi" className="py-12 px-4 bg-white border-y border-[#E8DFC8]/60">
@@ -68,13 +78,20 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ weddingData, onOpe
             </h3>
             <p className="text-[11px] text-stone-500 mt-1 font-medium">Xóm Đậu 8b, Phổ Yên, Thái Nguyên</p>
             
-            <button
-              onClick={handleLikeGroom}
-              className="mt-3 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white text-[#9B2C2C] border border-stone-200 text-[10px] font-semibold active:scale-90 transition-all cursor-pointer"
-            >
-              <Heart className="w-3 h-3 fill-current" />
-              <span>{groomLikes}</span>
-            </button>
+            <div className="relative mt-3">
+              {showGroomFloat && (
+                <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-[#9B2C2C] text-[#FFDF73] text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md animate-bounce whitespace-nowrap z-10">
+                  +1 Yêu Thương ❤️
+                </div>
+              )}
+              <button
+                onClick={handleLikeGroom}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-rose-50 text-[#9B2C2C] border border-rose-200 text-xs font-bold active:scale-95 shadow-2xs transition-all cursor-pointer"
+              >
+                <Heart className="w-3.5 h-3.5 fill-current animate-pulse" />
+                <span>{groomLikes}</span>
+              </button>
+            </div>
           </div>
 
           {/* Bride */}
@@ -104,13 +121,20 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ weddingData, onOpe
             </h3>
             <p className="text-[11px] text-stone-500 mt-1 font-medium">Thái Nguyên</p>
 
-            <button
-              onClick={handleLikeBride}
-              className="mt-3 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white text-[#9B2C2C] border border-stone-200 text-[10px] font-semibold active:scale-90 transition-all cursor-pointer"
-            >
-              <Heart className="w-3 h-3 fill-current" />
-              <span>{brideLikes}</span>
-            </button>
+            <div className="relative mt-3">
+              {showBrideFloat && (
+                <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-[#9B2C2C] text-[#FFDF73] text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md animate-bounce whitespace-nowrap z-10">
+                  +1 Yêu Thương ❤️
+                </div>
+              )}
+              <button
+                onClick={handleLikeBride}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-rose-50 text-[#9B2C2C] border border-rose-200 text-xs font-bold active:scale-95 shadow-2xs transition-all cursor-pointer"
+              >
+                <Heart className="w-3.5 h-3.5 fill-current animate-pulse" />
+                <span>{brideLikes}</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

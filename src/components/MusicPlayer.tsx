@@ -24,41 +24,55 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ autoPlayTrigger }) => 
     {
       id: 'canon',
       name: 'Canon in D',
-      artist: 'Johann Pachelbel',
+      artist: 'Johann Pachelbel (Acoustic Piano)',
       bpm: 72,
       chords: [
-        [293.66, 369.99, 440.0, 587.33], // D maj
-        [220.0, 329.63, 440.0, 554.37],  // A maj
-        [246.94, 293.66, 369.99, 493.88],// B min
-        [185.0, 293.66, 369.99, 440.0],  // F# min
-        [196.0, 246.94, 293.66, 392.0],  // G maj
-        [220.0, 293.66, 369.99, 440.0],  // D maj
-        [196.0, 246.94, 329.63, 392.0],  // G/Em
-        [220.0, 277.18, 329.63, 440.0],  // A7
+        [146.83, 293.66, 369.99, 440.0, 587.33], // D maj + low bass
+        [110.0, 220.0, 329.63, 440.0, 554.37],   // A maj + low bass
+        [123.47, 246.94, 293.66, 369.99, 493.88],// B min
+        [92.5, 185.0, 293.66, 369.99, 440.0],    // F# min
+        [98.0, 196.0, 246.94, 293.66, 392.0],    // G maj
+        [146.83, 220.0, 293.66, 369.99, 440.0],  // D maj
+        [98.0, 196.0, 246.94, 329.63, 392.0],    // G/Em
+        [110.0, 220.0, 277.18, 329.63, 440.0],   // A7
+      ],
+    },
+    {
+      id: 'beautiful-in-white',
+      name: 'Beautiful in White',
+      artist: 'Shane Filan (Piano Chimes)',
+      bpm: 70,
+      chords: [
+        [130.81, 261.63, 329.63, 392.0, 523.25], // C maj
+        [98.0, 196.0, 246.94, 293.66, 392.0],    // G maj
+        [110.0, 220.0, 261.63, 329.63, 440.0],   // A min
+        [87.31, 174.61, 220.0, 261.63, 349.23],  // F maj
+        [130.81, 261.63, 329.63, 392.0, 523.25], // C maj
+        [98.0, 196.0, 293.66, 392.0, 493.88],    // G maj
       ],
     },
     {
       id: 'thousand-years',
       name: 'A Thousand Years',
-      artist: 'Acoustic Piano',
-      bpm: 64,
+      artist: 'Christina Perri (Romantic Piano)',
+      bpm: 66,
       chords: [
-        [261.63, 329.63, 392.0, 523.25], // C maj
-        [220.0, 261.63, 329.63, 440.0],  // A min
-        [174.61, 220.0, 261.63, 349.23], // F maj
-        [196.0, 246.94, 293.66, 392.0],  // G maj
+        [130.81, 261.63, 329.63, 392.0, 523.25], // C maj
+        [110.0, 220.0, 261.63, 329.63, 440.0],   // A min
+        [87.31, 174.61, 220.0, 261.63, 349.23],  // F maj
+        [98.0, 196.0, 246.94, 293.66, 392.0],    // G maj
       ],
     },
     {
-      id: 'wedding-march',
-      name: 'Wedding March & Love Waltz',
-      artist: 'Romantic Chimes',
-      bpm: 80,
+      id: 'until-i-found-you',
+      name: 'Until I Found You',
+      artist: 'Stephen Sanchez (Love Ballad)',
+      bpm: 76,
       chords: [
-        [261.63, 329.63, 392.0, 523.25], // C
-        [196.0, 246.94, 293.66, 392.0],  // G
-        [220.0, 261.63, 329.63, 440.0],  // Am
-        [174.61, 220.0, 261.63, 349.23], // F
+        [130.81, 261.63, 329.63, 415.3, 523.25], // C - Caug
+        [110.0, 220.0, 261.63, 329.63, 440.0],   // Am
+        [87.31, 174.61, 220.0, 261.63, 349.23],  // F
+        [116.54, 233.08, 293.66, 349.23, 466.16],// Fm
       ],
     },
   ];
@@ -69,23 +83,36 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ autoPlayTrigger }) => 
     if (!audioCtxRef.current || audioCtxRef.current.state === 'suspended') return;
     const ctx = audioCtxRef.current;
 
+    // Master filter for velvety acoustic piano warmth
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(1800, startTime);
+    filter.connect(ctx.destination);
+
     frequencies.forEach((freq, index) => {
       const osc = ctx.createOscillator();
+      const osc2 = ctx.createOscillator();
       const gain = ctx.createGain();
 
       osc.type = 'triangle';
-      osc.frequency.setValueAtTime(freq, startTime + index * 0.16);
+      osc.frequency.setValueAtTime(freq, startTime + index * 0.15);
 
-      const noteStart = startTime + index * 0.16;
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(freq * 2, startTime + index * 0.15);
+
+      const noteStart = startTime + index * 0.15;
       gain.gain.setValueAtTime(0.0001, noteStart);
-      gain.gain.exponentialRampToValueAtTime(0.038, noteStart + 0.06);
+      gain.gain.exponentialRampToValueAtTime(0.042, noteStart + 0.04);
       gain.gain.exponentialRampToValueAtTime(0.0001, noteStart + duration);
 
       osc.connect(gain);
-      gain.connect(ctx.destination);
+      osc2.connect(gain);
+      gain.connect(filter);
 
       osc.start(noteStart);
+      osc2.start(noteStart);
       osc.stop(noteStart + duration + 0.1);
+      osc2.stop(noteStart + duration + 0.1);
     });
   };
 

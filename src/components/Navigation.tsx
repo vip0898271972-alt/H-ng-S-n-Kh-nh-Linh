@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, MailOpen, Heart, Volume2, VolumeX, Camera } from 'lucide-react';
+import { Menu, X, MailOpen, Heart, Volume2, VolumeX, Camera, UserPlus } from 'lucide-react';
 import { WeddingData } from '../types';
 
 interface NavigationProps {
@@ -7,6 +7,7 @@ interface NavigationProps {
   onOpenEnvelope: () => void;
   onScrollToRsvp: () => void;
   onOpenPhotoModal?: () => void;
+  onOpenPersonalizedModal?: () => void;
   isPlaying?: boolean;
   onToggleMusic?: () => void;
 }
@@ -16,6 +17,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   onOpenEnvelope,
   onScrollToRsvp,
   onOpenPhotoModal,
+  onOpenPersonalizedModal,
   isPlaying,
   onToggleMusic,
 }) => {
@@ -62,7 +64,7 @@ export const Navigation: React.FC<NavigationProps> = ({
         </nav>
 
         {/* Header Quick Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           {/* Music Toggle */}
           {onToggleMusic && (
             <button
@@ -71,6 +73,18 @@ export const Navigation: React.FC<NavigationProps> = ({
               className="p-1.5 rounded-full text-stone-600 hover:text-[#9B2C2C] hover:bg-stone-100 transition-colors"
             >
               {isPlaying ? <Volume2 className="w-4 h-4 text-[#9B2C2C]" /> : <VolumeX className="w-4 h-4 text-stone-400" />}
+            </button>
+          )}
+
+          {/* Personalized VIP Invite Generator */}
+          {onOpenPersonalizedModal && (
+            <button
+              onClick={onOpenPersonalizedModal}
+              title="Tạo link thiệp kèm tên từng khách mời"
+              className="p-1.5 rounded-full text-[#8C6D46] hover:text-[#9B2C2C] hover:bg-stone-100 transition-colors cursor-pointer"
+              aria-label="Tạo link thiệp mời cá nhân hóa"
+            >
+              <UserPlus className="w-4 h-4" />
             </button>
           )}
 
@@ -129,8 +143,21 @@ export const Navigation: React.FC<NavigationProps> = ({
               {link.label}
             </a>
           ))}
+          {onOpenPersonalizedModal && (
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenPersonalizedModal();
+              }}
+              className="w-full text-left py-2 text-sm font-semibold text-[#9B2C2C] flex items-center gap-2"
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>Tạo Link Thiệp Kèm Tên Bạn Bè</span>
+            </button>
+          )}
         </div>
       )}
     </header>
   );
 };
+

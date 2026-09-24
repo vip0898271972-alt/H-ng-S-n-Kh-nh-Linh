@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Heart, Send, MessageCircle, Sparkles } from 'lucide-react';
 import { GuestWish } from '../types';
-import { fireWeddingConfetti } from '../utils/confettiHelper';
+import { fireWeddingConfetti, fireGrandSalute } from '../utils/confettiHelper';
+import { soundEffects } from '../utils/audioHelper';
 
 interface GuestbookSectionProps {
   wishes: GuestWish[];
@@ -19,6 +20,13 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = ({
   const [message, setMessage] = useState('');
   const [justPosted, setJustPosted] = useState(false);
 
+  const quickWishes = [
+    'Chúc hai bạn trăm năm hạnh phúc, răng long đầu bạc! 💍',
+    'Chúc mừng ngày vui của Sơn & Linh, sớm sinh quý tử! 🥂',
+    'Mãi mặn nồng và yêu thương nhau như ngày đầu nhé! 💖',
+    'Gia đình nhỏ luôn ngập tràn tiếng cười và bình an! ✨',
+  ];
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!authorName.trim() || !message.trim()) return;
@@ -31,9 +39,17 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = ({
 
     setMessage('');
     setJustPosted(true);
+    soundEffects.playCelebrationFanfare();
+    fireGrandSalute();
     fireWeddingConfetti();
     setTimeout(() => setJustPosted(false), 3000);
   };
+
+  const handleLike = (wishId: string) => {
+    soundEffects.playHeartChime();
+    onLikeWish(wishId);
+  };
+
 
   return (
     <section id="so-luu-but" className="py-12 px-4 bg-[#FAF7F2] border-t border-[#E8DFC8]/60">
@@ -92,9 +108,27 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = ({
             </div>
 
             <div>
-              <label className="block text-stone-600 font-semibold mb-1">
-                Lời chúc gửi đến Sơn &amp; Linh *
-              </label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-stone-600 font-semibold">
+                  Lời chúc gửi đến Sơn &amp; Linh *
+                </label>
+                <span className="text-[10px] text-stone-400">Chọn nhanh lời chúc:</span>
+              </div>
+
+              {/* Quick suggestion chips */}
+              <div className="flex flex-wrap gap-1 mb-2">
+                {quickWishes.map((q, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setMessage(q)}
+                    className="text-[10px] px-2 py-0.5 rounded-full bg-[#FAF0E6] hover:bg-[#F4E3D0] text-[#8C6D46] border border-[#E8DFC8] active:scale-95 transition-all text-left"
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
+
               <textarea
                 rows={2}
                 required
@@ -110,7 +144,7 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = ({
               className="w-full py-2.5 rounded-xl bg-[#9B2C2C] hover:bg-[#801F1F] text-white font-semibold text-xs tracking-wide shadow-xs active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5"
             >
               <Send className="w-3.5 h-3.5" />
-              <span>Gửi Lời Chúc</span>
+              <span>Gửi Lời Chúc Mừng</span>
             </button>
           </form>
         </div>
@@ -141,10 +175,10 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = ({
                 </div>
 
                 <button
-                  onClick={() => onLikeWish(wish.id)}
-                  className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-[#FAF7F2] text-[#9B2C2C] active:scale-90 transition-all cursor-pointer"
+                  onClick={() => handleLike(wish.id)}
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-[#FAF7F2] hover:bg-rose-50 text-[#9B2C2C] border border-stone-200 active:scale-90 transition-all cursor-pointer"
                 >
-                  <Heart className="w-3 h-3 fill-[#9B2C2C]" />
+                  <Heart className="w-3.5 h-3.5 fill-[#9B2C2C]" />
                   <span>{wish.likes}</span>
                 </button>
               </div>

@@ -21,6 +21,9 @@ import { MusicPlayer } from './components/MusicPlayer';
 import { Footer } from './components/Footer';
 import { MobileBottomDock } from './components/MobileBottomDock';
 import { PhotoCustomizerModal } from './components/PhotoCustomizerModal';
+import { CelebrationOverlay } from './components/CelebrationOverlay';
+import { DressCodeSection } from './components/DressCodeSection';
+import { PersonalizedInviteModal } from './components/PersonalizedInviteModal';
 
 export default function App() {
   const [weddingData, setWeddingData] = useState<WeddingData>(() => {
@@ -76,12 +79,21 @@ export default function App() {
     return '';
   });
 
-  const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false);
+  const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(() => {
+    try {
+      // Show envelope automatically on initial visit for high-impact experience
+      return sessionStorage.getItem('wedding_envelope_viewed') !== 'true';
+    } catch {
+      return true;
+    }
+  });
   const [autoPlayMusic, setAutoPlayMusic] = useState(false);
+  const [isPersonalizedModalOpen, setIsPersonalizedModalOpen] = useState(false);
 
   // Photo Customizer Modal state
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
   const [photoModalTab, setPhotoModalTab] = useState<'hero' | 'groom' | 'bride' | 'gallery'>('hero');
+
 
   const handleOpenPhotoModal = (tab: 'hero' | 'groom' | 'bride' | 'gallery' = 'hero') => {
     setPhotoModalTab(tab);
@@ -158,6 +170,15 @@ export default function App() {
     }
   };
 
+  const handleCloseEnvelope = () => {
+    setIsEnvelopeOpen(false);
+    try {
+      sessionStorage.setItem('wedding_envelope_viewed', 'true');
+    } catch {
+      // ignore
+    }
+  };
+
   const scrollToRsvp = () => {
     const rsvpElement = document.getElementById('rsvp');
     if (rsvpElement) {
@@ -178,13 +199,23 @@ export default function App() {
       {/* Falling Sakura Petals Subtle Background */}
       <PetalCanvas enabled={true} />
 
+      {/* Floating Live Celebration Reactions & Fireworks */}
+      <CelebrationOverlay />
+
       {/* Wax-Sealed Envelope Modal (Accessible anytime) */}
       <EnvelopeModal
         isOpen={isEnvelopeOpen}
-        onClose={() => setIsEnvelopeOpen(false)}
+        onClose={handleCloseEnvelope}
         guestName={guestName}
         weddingData={weddingData}
         onOpenLetter={() => setAutoPlayMusic(true)}
+      />
+
+      {/* VIP Personalized Invite Modal */}
+      <PersonalizedInviteModal
+        isOpen={isPersonalizedModalOpen}
+        onClose={() => setIsPersonalizedModalOpen(false)}
+        coupleNames={`${weddingData.groom.name} & ${weddingData.bride.name}`}
       />
 
       {/* Photo Customizer Modal */}
@@ -210,6 +241,7 @@ export default function App() {
           onOpenEnvelope={() => setIsEnvelopeOpen(true)}
           onScrollToRsvp={scrollToRsvp}
           onOpenPhotoModal={() => handleOpenPhotoModal('hero')}
+          onOpenPersonalizedModal={() => setIsPersonalizedModalOpen(true)}
         />
 
         {/* Main Content */}
@@ -238,11 +270,37 @@ export default function App() {
             venueReception={weddingData.venueReception}
           />
 
+          {/* Dress Code & Etiquette Recommendations */}
+          <DressCodeSection />
+
           {/* Luxury Photo Album */}
           <GallerySection
             gallery={weddingData.gallery}
             onOpenPhotoModal={handleOpenPhotoModal}
           />
+
+          {/* VIP Personalized Invite Banner */}
+          <div className="px-4 py-4">
+            <button
+              onClick={() => setIsPersonalizedModalOpen(true)}
+              className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#FAF0E6] to-[#F5ECE2] border border-[#D4AF37]/60 shadow-xs flex items-center justify-between text-left hover:border-[#9B2C2C] active:scale-98 transition-all group"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-2xl group-hover:scale-125 transition-transform">💌</span>
+                <div>
+                  <h4 className="text-xs font-bold text-[#2D2825] font-serif-elegant">
+                    Tạo Thiệp Mời Gửi Từng Người
+                  </h4>
+                  <p className="text-[10px] text-stone-500">
+                    Nhập tên bạn bè để gửi link có thiệp phong bì riêng
+                  </p>
+                </div>
+              </div>
+              <span className="text-[10px] font-bold text-[#9B2C2C] bg-white px-2.5 py-1 rounded-full shadow-2xs border border-stone-200">
+                Thử Ngay →
+              </span>
+            </button>
+          </div>
 
           {/* Gift Box (VietQR Bank accounts) */}
           <GiftBoxSection

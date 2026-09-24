@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Sparkles, Heart, ChevronRight, X, Volume2 } from 'lucide-react';
 import { WeddingData } from '../types';
-import { fireWeddingConfetti } from '../utils/confettiHelper';
+import { fireWeddingConfetti, fireGrandSalute } from '../utils/confettiHelper';
+import { soundEffects } from '../utils/audioHelper';
 
 interface EnvelopeModalProps {
   isOpen: boolean;
@@ -25,29 +26,13 @@ export const EnvelopeModal: React.FC<EnvelopeModalProps> = ({
 
   const handleBreakSeal = () => {
     setIsSealBroken(true);
-    
-    // Play subtle soft chime
-    try {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      const ctx = new AudioCtx();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
-      osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.25); // A5
-      gain.gain.setValueAtTime(0.04, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.6);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.6);
-    } catch {
-      // audio ignore
-    }
+    soundEffects.playHeartChime();
 
     setTimeout(() => {
       setIsEnvelopeOpened(true);
       onOpenLetter();
+      soundEffects.playCelebrationFanfare();
+      fireGrandSalute();
       fireWeddingConfetti();
     }, 700);
   };
