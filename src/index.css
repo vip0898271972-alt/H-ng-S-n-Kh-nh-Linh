@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+.font-script {
+  font-family: 'Alex Brush', cursive;
+}
+
+.font-serif-elegant {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-display {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Elegant gold gradient text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #B38728 0%, #FBF5B7 25%, #DAA520 50%, #AA771C 75%, #FBF5B7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #B38728 0%, #D4AF37 50%, #AA771C 100%);
+}
+
+.border-gold-subtle {
+  border-color: rgba(212, 175, 55, 0.35);
+}
+
+/* Subtle luxury paper texture */
+.paper-texture {
+  background-color: #FAF7F2;
+  background-image: radial-gradient(#00000008 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Glassmorphic luxury panel */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(229, 218, 203, 0.6);
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 3s ease-in-out infinite;
+}

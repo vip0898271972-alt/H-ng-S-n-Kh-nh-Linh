@@ -1,0 +1,6 @@
+{
+  "name": "Thiệp Cưới Online Hoàng Gia & Hiện Đại",
+  "description": "Trang web thiệp cưới online sang trọng với phong bì mở tương tác, đếm ngược, lịch trình hôn lễ, album ảnh, chỉ đường và sổ lưu bút chúc phúc.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

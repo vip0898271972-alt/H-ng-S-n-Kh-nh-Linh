@@ -1,0 +1,150 @@
+import { WeddingData, GuestWish } from '../types';
+
+// Official wedding photography provided by user for Hồng Sơn & Kháng Linh
+export const WEDDING_PHOTOS = {
+  hero: 'https://cdn.phototourl.com/member/2026-09-24-6a9faa72-3381-4b4e-92ec-62f51621269c.jpg',
+  groom: 'https://cdn.phototourl.com/member/2026-09-24-20ebd8c3-7672-4d5c-9835-9bfb116a2912.jpg',
+  bride: 'https://cdn.phototourl.com/member/2026-09-24-1a2eed2f-a784-4be5-a22e-eee6a63dfaea.jpg',
+  kiss: 'https://cdn.phototourl.com/member/2026-09-24-20ebd8c3-7672-4d5c-9835-9bfb116a2912.jpg',
+  rings: 'https://cdn.phototourl.com/member/2026-09-24-1a2eed2f-a784-4be5-a22e-eee6a63dfaea.jpg',
+  toast: 'https://cdn.phototourl.com/member/2026-09-24-20ebd8c3-7672-4d5c-9835-9bfb116a2912.jpg',
+  together: 'https://cdn.phototourl.com/member/2026-09-24-6a9faa72-3381-4b4e-92ec-62f51621269c.jpg',
+};
+
+export const INITIAL_WEDDING_DATA: WeddingData = {
+  groom: {
+    name: 'Hồng Sơn',
+    roleTitle: 'Chú Rể',
+    fatherName: '',
+    motherName: '',
+    hometown: 'Xóm Đậu 8b, Minh Đức, Phổ Yên, Thái Nguyên',
+    bio: 'Chàng trai luôn ấm áp, trân trọng và hết lòng yêu thương, che chở cho Kháng Linh trong từng khoảnh khắc cuộc đời.',
+    avatar: WEDDING_PHOTOS.groom,
+  },
+  bride: {
+    name: 'Kháng Linh',
+    roleTitle: 'Cô Dâu',
+    fatherName: '',
+    motherName: '',
+    hometown: 'Thái Nguyên',
+    bio: 'Cô dâu dịu dàng với nụ cười ngọt ngào, người thắp sáng niềm vui và mang lại sự bình yên trọn vẹn nhất cho Sơn.',
+    avatar: WEDDING_PHOTOS.bride,
+  },
+  weddingDate: '2026-09-29T11:00:00',
+  tagline: 'SAVE OUR DATE · TRÂN TRỌNG BÁO HỶ',
+  quote: 'Hạnh phúc là khi tìm thấy một người để cùng sẻ chia mọi vui buồn và cùng nhau bước đi suốt cuộc đời.',
+  quoteAuthor: 'Hồng Sơn & Kháng Linh',
+  heroImage: WEDDING_PHOTOS.hero,
+  venueCeremony: {
+    title: 'LỄ THÀNH HÔN & KHAI TIỆC',
+    subtitle: 'Nghi lễ gia tiên & Tiệc mừng thân mật',
+    date: 'Thứ Ba, ngày 29 tháng 09 năm 2026',
+    time: '11:00 Trưa (Tức ngày 19 tháng 08 âm lịch)',
+    venueName: 'Tư gia Nhà Trai',
+    address: 'Xóm Đậu 8b, Xã Minh Đức, Thành phố Phổ Yên, Tỉnh Thái Nguyên',
+    mapQuery: 'Xóm Đậu 8b, Minh Đức, Phổ Yên, Thái Nguyên',
+    googleMapUrl: 'https://maps.app.goo.gl/6UMDbi33LYfV9WUH8',
+  },
+  venueReception: {
+    title: 'TIỆC CƯỚI CHÍNH THỨC',
+    subtitle: 'Đón tiếp quan khách & Khai tiệc chúc mừng',
+    date: 'Thứ Ba, ngày 29 tháng 09 năm 2026',
+    time: '11:00 Trưa (Đón khách từ 10:00)',
+    venueName: 'Tư Gia - Xóm Đậu 8b',
+    address: 'Xóm Đậu 8b, Xã Minh Đức, Thành phố Phổ Yên, Tỉnh Thái Nguyên',
+    mapQuery: 'Xóm Đậu 8b, Minh Đức, Phổ Yên, Thái Nguyên',
+    googleMapUrl: 'https://maps.app.goo.gl/6UMDbi33LYfV9WUH8',
+  },
+  loveMilestones: [
+    {
+      id: 'm1',
+      year: '2023',
+      title: 'Lần Đầu Gặp Gỡ',
+      description: 'Một ngày tình cờ quen biết, ánh mắt đầu tiên chạm nhau và câu chuyện bắt đầu từ những sẻ chia chân thành mộc mạc nhất.',
+      tag: 'Cơ duyên',
+    },
+    {
+      id: 'm2',
+      year: '2024',
+      title: 'Đồng Hành Cùng Nhau',
+      description: 'Những chuyến đi xa cùng nhau qua bao con đường, cùng chia ngọt sẻ bùi và gắn bó bền chặt.',
+      tag: 'Yêu thương',
+    },
+    {
+      id: 'm3',
+      year: '29.09.2026',
+      title: 'Về Chung Một Nhà',
+      description: 'Khoảnh khắc trao nhau chiếc nhẫn cưới, chính thức trở thành vợ chồng trước sự chúc phúc của gia đình và bạn bè.',
+      tag: 'Hạnh phúc',
+    },
+  ],
+  schedule: [
+    {
+      time: '10:00',
+      title: 'Đón Tiếp Quan Khách',
+      description: 'Chụp hình lưu niệm cùng cô dâu chú rể tại cổng hoa cưới.',
+      iconName: 'Camera',
+    },
+    {
+      time: '11:00',
+      title: 'Nghi Lễ Thành Hôn',
+      description: 'Trao nhẫn cưới, cắt bánh cưới và rót rượu champagne chúc mừng.',
+      iconName: 'HeartHandshake',
+    },
+    {
+      time: '11:30',
+      title: 'Khai Tiệc Mừng Hạnh Phúc',
+      description: 'Thưởng thức tiệc mặn thân mật và cùng nâng ly chúc phúc trăm năm.',
+      iconName: 'Wine',
+    },
+  ],
+  gallery: [
+    { id: 'g1', url: 'https://cdn.phototourl.com/member/2026-09-24-6a9faa72-3381-4b4e-92ec-62f51621269c.jpg', caption: 'Hồng Sơn & Kháng Linh - Ngày hạnh phúc trọn vẹn', colSpan: 2 },
+    { id: 'g2', url: 'https://cdn.phototourl.com/member/2026-09-24-20ebd8c3-7672-4d5c-9835-9bfb116a2912.jpg', caption: 'Khoảnh khắc ngọt ngào bên nhau', colSpan: 1 },
+    { id: 'g3', url: 'https://cdn.phototourl.com/member/2026-09-24-1a2eed2f-a784-4be5-a22e-eee6a63dfaea.jpg', caption: 'Nụ cười rạng ngời đong đầy yêu thương', colSpan: 1 },
+  ],
+  groomBank: {
+    owner: 'ĐỖ HỒNG SƠN',
+    bankName: 'Techcombank',
+    accountNumber: '761266668888',
+    branch: 'Chi nhánh Thái Nguyên',
+    qrUrl: 'https://cdn.phototourl.com/member/2026-09-24-07b41438-68a0-42ed-ab1a-19a7cea407d4.jpg',
+  },
+  brideBank: {
+    owner: 'TRIỆU THỊ LÊ',
+    bankName: 'MB Bank',
+    accountNumber: '071120026888',
+    branch: 'Chi nhánh Thái Nguyên',
+    qrUrl: 'https://cdn.phototourl.com/member/2026-09-24-8c9172ec-c7b4-402b-8dc4-57f7a909f96f.jpg',
+  },
+};
+
+export const INITIAL_WISHES: GuestWish[] = [
+  {
+    id: 'w1',
+    name: 'Bác Trưởng & Gia đình Xóm Đậu',
+    relationship: 'Bà con lối xóm',
+    message: 'Chúc hai cháu Hồng Sơn và Kháng Linh trăm năm hạnh phúc, gia đạo êm ấm, thuận hòa!',
+    likes: 38,
+    createdAt: 'Vừa xong',
+    avatarBg: '#9B2C2C',
+  },
+  {
+    id: 'w2',
+    name: 'Hội Bạn Thân Chú Rể',
+    relationship: 'Bạn thân chú rể',
+    message: 'Chúc mừng anh Sơn đã rước nàng Linh về dinh! Chúc đôi bạn trẻ sớm có quý tử, trăm năm hòa hợp!',
+    likes: 45,
+    createdAt: 'Hôm nay',
+    avatarBg: '#2563EB',
+  },
+  {
+    id: 'w3',
+    name: 'Hội Chị Em Cô Dâu',
+    relationship: 'Bạn thân cô dâu',
+    message: 'Kháng Linh hôm nay xinh xuất sắc! Chúc hai vợ chồng luôn hạnh phúc ngọt ngào như ngày đầu nhé!',
+    likes: 52,
+    createdAt: 'Hôm nay',
+    avatarBg: '#DB2777',
+  },
+];
