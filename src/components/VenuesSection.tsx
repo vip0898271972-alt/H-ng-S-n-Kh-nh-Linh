@@ -42,13 +42,13 @@ export const VenuesSection: React.FC<VenuesSectionProps> = ({ venueReception }) 
               THỨ BA · 29.09.2026
             </span>
             <div className="font-serif-elegant text-3xl font-bold text-[#9B2C2C] leading-none mb-1">
-              11:00 TRƯA
+              17:00 CHIỀU
             </div>
             <p className="text-xs text-stone-500 font-medium">
               (Nhằm ngày 19 tháng 08 năm Bính Ngọ - Âm lịch)
             </p>
             <p className="text-[11px] text-stone-400 mt-1">
-              Đón khách chụp hình lưu niệm từ 10:00 sáng
+              Đón khách chụp hình lưu niệm từ 16:30 chiều
             </p>
           </div>
 

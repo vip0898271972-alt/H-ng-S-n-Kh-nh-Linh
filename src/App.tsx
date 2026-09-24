@@ -32,12 +32,15 @@ export default function App() {
       localStorage.removeItem('wedding_custom_data');
       localStorage.removeItem('wedding_custom_data_v3');
       localStorage.removeItem('wedding_custom_data_v4');
-      const saved = localStorage.getItem('wedding_custom_data_v5');
+      localStorage.removeItem('wedding_custom_data_v5');
+      const saved = localStorage.getItem('wedding_custom_data_v6');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed?.groom?.name && parsed.heroImage) {
           return {
             ...parsed,
+            weddingDate: INITIAL_WEDDING_DATA.weddingDate,
+            schedule: INITIAL_WEDDING_DATA.schedule,
             groomBank: INITIAL_WEDDING_DATA.groomBank,
             brideBank: INITIAL_WEDDING_DATA.brideBank,
             venueCeremony: INITIAL_WEDDING_DATA.venueCeremony,
@@ -103,7 +106,7 @@ export default function App() {
   const handleUpdateWeddingData = (updated: WeddingData) => {
     setWeddingData(updated);
     try {
-      localStorage.setItem('wedding_custom_data_v5', JSON.stringify(updated));
+      localStorage.setItem('wedding_custom_data_v6', JSON.stringify(updated));
     } catch (e) {
       console.warn('Could not save to localStorage', e);
     }
@@ -261,7 +264,7 @@ export default function App() {
             onOpenPhotoModal={handleOpenPhotoModal}
           />
 
-          {/* Wedding Day Schedule (10:00, 11:00, 11:30) */}
+          {/* Wedding Day Schedule (16:30, 17:00, 17:30) */}
           <ScheduleSection schedule={weddingData.schedule} />
 
           {/* Time & Venue: Xóm Đậu 8b, Minh Đức, Phổ Yên, Thái Nguyên */}

@@ -132,11 +132,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </p>
             {/* Save to Calendar Button */}
             <a
-              href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=L%E1%BB%85+Th%C3%A0nh+H%C3%B4n+H%E1%BB%93ng+S%C6%A1n+%26+Kh%C3%A1ng+Linh&dates=20260929T040000Z/20260929T070000Z&details=Tr%C3%A2n+tr%E1%BB%8Dng+k%C3%ADnh+m%E1%BB%9Di+qu%C3%BD+kh%C3%A1ch+t%E1%BB%9Bi+d%E1%BB%B1+L%E1%BB%85+Th%C3%A0nh+H%C3%B4n+c%E1%BB%A7a+ch%C3%BAng+t%C3%B4i!&location=X%C3%B3m+%C4%90%E1%BA%ADu+8b%2C+Minh+%C4%90%E1%BB%A9c%2C+Ph%E1%BB%95+Y%C3%AAn%2C+Th%C3%A1i+Nguy%C3%AAn"
+              href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=L%E1%BB%85+Th%C3%A0nh+H%C3%B4n+H%E1%BB%93ng+S%C6%A1n+%26+Kh%C3%A1ng+Linh&dates=20260929T100000Z/20260929T140000Z&details=Tr%C3%A2n+tr%E1%BB%8Dng+k%C3%ADnh+m%E1%BB%9Di+qu%C3%BD+kh%C3%A1ch+t%E1%BB%9Bi+d%E1%BB%B1+L%E1%BB%85+Th%C3%A0nh+H%C3%B4n+c%E1%BB%A7a+ch%C3%BAng+t%C3%B4i+l%C3%BAc+17h00+chi%E1%BB%81u!&location=X%C3%B3m+%C4%90%E1%BA%ADu+8b%2C+Minh+%C4%90%E1%BB%A9c%2C+Ph%E1%BB%95+Y%C3%AAn%2C+Th%C3%A1i+Nguy%C3%AAn"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[10px] text-[#9B2C2C] hover:underline font-semibold flex items-center gap-1"
-              title="Lưu ngày cưới vào Google Calendar"
+              title="Lưu ngày cưới 17:00 chiều vào Google Calendar"
             >
               <Calendar className="w-3 h-3 text-[#9B2C2C]" />
               <span>+ Lưu vào lịch</span>
